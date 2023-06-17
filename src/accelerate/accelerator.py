@@ -357,7 +357,7 @@ class Accelerator:
             **kwargs,
         )
 
-        trackers = filter_trackers(log_with, self.logging_dir)
+        trackers = filter_trackers(log_with, self.project_configuration.project_dir)
         if len(trackers) < 1 and log_with is not None:
             warnings.warn(f"`log_with={log_with}` was passed but no supported trackers are currently installed.")
         self.log_with = trackers
@@ -2184,7 +2184,7 @@ class Accelerator:
                 if getattr(tracker_init, "requires_logging_directory"):
                     # We can skip this check since it was done in `__init__`
                     self.trackers.append(
-                        tracker_init(project_name, self.logging_dir, **init_kwargs.get(str(tracker), {}))
+                        tracker_init(project_name, self.project_configuration.project_dir, **init_kwargs.get(str(tracker), {}))
                     )
                 else:
                     self.trackers.append(tracker_init(project_name, **init_kwargs.get(str(tracker), {})))
